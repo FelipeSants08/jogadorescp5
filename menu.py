@@ -8,6 +8,7 @@ def criar_jogador_menu(db: Session):
     nome = input("\nNome do jogador: ")
     idade = int(input("Idade do jogador: "))
     posicao = input("Posição do jogador: ")
+    time_id = int(input("Time do jogador(ID)"))
     jogador_data = {"nome": nome, "idade": idade, "posicao": posicao}
     
     try:

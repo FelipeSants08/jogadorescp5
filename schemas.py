@@ -96,12 +96,18 @@ class Estatistica(EstatisticaBase):
 
 
 # --- Schema para Relatório ---
-class Relatorio(BaseModel):
-    total_jogadores: int
-    total_times: int
-    partidas_realizadas: int
-    gols_totais: int
-    assistencias_totais: int
+class RelatorioJogador(BaseModel):
+    jogador_id: int
+    nome: str
+    gols: int
+    assistencias: int
+    cartoes_amarelos: int
+    cartoes_vermelhos: int
 
-    class Config:
-        orm_mode = True
+class RelatorioTime(BaseModel):
+    time_id: int
+    nome: str
+    gols: int
+    assistencias: int
+    cartoes_amarelos: int
+    cartoes_vermelhos: int

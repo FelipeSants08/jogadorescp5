@@ -91,10 +91,10 @@ def deletar_estatistica(estatistica_id: int, db: Session = Depends(obter_db)):
     return crud.deletar_estatistica(db, estatistica_id)
 
 # --- Relatórios Estatísticos com Pandas ---
-@app.get("/relatorio-jogadores/", response_model=schemas.Relatorio)
+@app.get("/relatorio-jogadores/", response_model=List[schemas.RelatorioJogador])
 def obter_relatorio_jogadores(db: Session = Depends(obter_db)):
     return crud.gerar_relatorio_jogadores(db)
 
-@app.get("/relatorio-times/", response_model=schemas.Relatorio)
+@app.get("/relatorio-times/", response_model=List[schemas.RelatorioTime])
 def obter_relatorio_times(db: Session = Depends(obter_db)):
     return crud.gerar_relatorio_times(db)
