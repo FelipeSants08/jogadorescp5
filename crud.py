@@ -73,8 +73,8 @@ def deletar_time(db: Session, time_id: int):
 # --- CRUD Partidas ---
 def criar_partida(db: Session, partida: schemas.PartidaCriar):
     time_casa = validar_existencia(db, models.Time, partida.time_casa_id, "Time")
-    time_visitante = validar_existencia(db, models.Time, partida.time_visitante_id, "Time")
-    if partida.data < date.today():
+    time_fora = validar_existencia(db, models.Time, partida.time_fora_id, "Time")
+    if partida.data_partida < date.today():
         raise HTTPException(status_code=400, detail="Não é possível criar uma partida no passado.")
     db_partida = models.Partida(**partida.dict())
     try:
@@ -91,7 +91,7 @@ def listar_partidas(db: Session, pular: int = 0, limite: int = 10):
 
 def atualizar_partida(db: Session, partida_id: int, partida: schemas.PartidaAtualizar):
     db_partida = validar_existencia(db, models.Partida, partida_id, "Partida")
-    if partida.data and partida.data < date.today():
+    if partida.data_partida and partida.data_partida < date.today():
         raise HTTPException(status_code=400, detail="Não é possível definir uma partida no passado.")
     for chave, valor in partida.dict(exclude_unset=True).items():
         setattr(db_partida, chave, valor)

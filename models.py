@@ -3,18 +3,7 @@ from sqlalchemy.orm import relationship
 from database import Base
 
 
-class Jogador(Base):
-    __tablename__ = "jogadores"
-    id = Column(Integer, primary_key=True, index=True)
-    nome = Column(String, index=True)
-    posicao = Column(String)
-    idade = Column(Integer)
-    time_id = Column(Integer, ForeignKey("times.id"))
 
-    # Relacionamento com time
-    time = relationship("Time", back_populates="jogadores")
-    # Relacionamento com Estatísticas
-    estatisticas = relationship("Estatisticas", back_populates="jogador")
 
 class Time(Base):
     __tablename__ = "times"
@@ -43,16 +32,33 @@ class Partida(Base):
     # Relacionamento com Estatísticas
     estatisticas = relationship("Estatistica", back_populates="partida")
 
+
+
+class Jogador(Base):
+    __tablename__ = "jogadores"
+    id = Column(Integer, primary_key=True, index=True)
+    nome = Column(String, index=True)
+    posicao = Column(String)
+    idade = Column(Integer)
+    time_id = Column(Integer, ForeignKey("times.id"))
+
+    # Relacionamento com time
+    time = relationship("Time", back_populates="jogadores")
+    # Relacionamento com Estatísticas
+    estatisticas = relationship("Estatistica", back_populates="jogador")
+
+
+
 class Estatistica(Base):
-    __tabelename__ = "estatisticas"
+    __tablename__ = "estatisticas"
 
     id = Column(Integer, primary_key=True, index=True)
     jogador_estatistica = Column(Integer, ForeignKey("jogadores.id"))
-    partida_estatistica = Column(Integer, ForeignKey("jogadores.id"))
+    partida_estatistica = Column(Integer, ForeignKey("partidas.id"))
     gols = Column(Integer, default=0)
     assistencias = Column(Integer, default=0)
     cartoes_amarelos = Column(Integer, default=0)
     cartoes_vermelhos = Column(Integer, default=0)
 
-    jogador = relationship("Jogador")
-    partida = relationship("Partida")
+    jogador =  relationship("Jogador", back_populates="estatisticas")
+    partida = relationship("Partida", back_populates="estatisticas")
